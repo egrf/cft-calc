@@ -17,13 +17,18 @@ public class Validator {
         String message = "";
         if(!bracketsChecking())
             message+=" You have an error in brackets.\n";
-        if(expressionValidator())
-            message+= "Your string  contains wrong symbols!";
+        if(!expressionValidator())
+            message+= "Your string  contains wrong symbols!\n";
+        if (isInputEmpty()){
+            message+="Input TextField is empty!";
+        }
         return message;
+
     }
 
     private boolean expressionValidator(){
-        Pattern p = Pattern.compile("[a-zA-Zа-яА-Я@!#$%^&|`'\"<>{}]+");
+        //Pattern p = Pattern.compile("^[0-9\\+()./\\*]*[a-zA-Zа-яА-Я@!#$%,^:;&|`'\"<_>{}\\[\\]=]+[0-9\\+()./\\*]*[a-zA-Zа-яА-Я@!#$%,^:;&|`'\"<_>{}\\[\\]=]+");
+        Pattern p = Pattern.compile("^[0-9\\+:?()\\-./\\*]+");
         Matcher m = p.matcher(expression);
         return m.matches();
     }
@@ -42,6 +47,10 @@ public class Validator {
                 return false;
         }
         return countOfBrackets==0;
+    }
+
+    private boolean isInputEmpty(){
+        return expression.equals("");
     }
 
 }

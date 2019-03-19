@@ -34,18 +34,13 @@ public class CalcGUI extends JFrame {
 
     private class ButtonEventListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            if(!tfInput.getText().equals("")){
-                Validator validator = new Validator(tfInput.getText());
-                String message = validator.valudate();
-                if (!message.equals(""))
-                    JOptionPane.showMessageDialog(null, message,"Output", JOptionPane.PLAIN_MESSAGE);
-                else{
-
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Input TextField is empty!","Output", JOptionPane.PLAIN_MESSAGE);
+            Validator validator = new Validator(tfInput.getText());
+            String message = validator.valudate();
+            if (message.equals(""))
+                JOptionPane.showMessageDialog(null, "OK!","Output", JOptionPane.PLAIN_MESSAGE);
+            else{
+                JOptionPane.showMessageDialog(null, message,"Output", JOptionPane.PLAIN_MESSAGE);
             }
-
         }
     }
 }

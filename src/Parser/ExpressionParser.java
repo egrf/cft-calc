@@ -7,20 +7,14 @@ import java.util.Map;
 
 public class ExpressionParser {
 
-    private TreeElement treeElement;
-
-    public ExpressionParser(TreeElement treeElement) {
-        this.treeElement = treeElement;
-    }
-
-    public int inflectionPointSearch() {
+    public int inflectionPointSearch(TreeElement treeElement) {
         String lexeme = treeElement.getLexeme();
         int start = 0;
         int countOfPairsOfBrackets = countOfBrackets(lexeme);
-        return findInflectionPoint(lexeme, start, countOfPairsOfBrackets);
+        return findInflectionPoint(treeElement, lexeme, start, countOfPairsOfBrackets);
     }
 
-    private int findInflectionPoint (String lexeme, int start, int countOfPairsOfBrackets){
+    private int findInflectionPoint (TreeElement treeElement, String lexeme, int start, int countOfPairsOfBrackets){
         int id;
         int positionOfTheFirstLeftBracket = lexeme.indexOf('(');
         int positionOfTheLastRightBracket = lexeme.lastIndexOf(')');
@@ -31,15 +25,16 @@ public class ExpressionParser {
                         start++;
                         int end = lexeme.length()-1;
                         String newLexeme = lexeme.substring(start,end);
+                        treeElement.setLexeme(newLexeme);
                         countOfPairsOfBrackets = countOfBrackets(newLexeme);
-                        id =findInflectionPoint(newLexeme,start,countOfPairsOfBrackets);
+                        id =findInflectionPoint(treeElement, newLexeme,start,countOfPairsOfBrackets)-1;
                     } else {
                         int pair = findRightPair(lexeme)+1;
                         int end = lexeme.length();
                         String newLexeme = lexeme.substring(pair,end);
                         start+=pair;
                         countOfPairsOfBrackets = countOfBrackets(newLexeme);
-                        id = findInflectionPoint(newLexeme,start,countOfPairsOfBrackets);
+                        id = findInflectionPoint(treeElement, newLexeme,start,countOfPairsOfBrackets);
                     }
                 } else {
                     id = findPointInSimpleExpression(lexeme, start);
@@ -49,7 +44,7 @@ public class ExpressionParser {
                 int pair = findLeftPair(lexeme);
                 String newLexeme = lexeme.substring(0,pair);
                 countOfPairsOfBrackets = countOfBrackets(newLexeme);
-                id = findInflectionPoint(newLexeme,start,countOfPairsOfBrackets);
+                id = findInflectionPoint(treeElement, newLexeme,start,countOfPairsOfBrackets);
             } else
                 id = findPointInSimpleExpression(lexeme, start);
 
@@ -124,14 +119,18 @@ public class ExpressionParser {
         char[] charsLexem = lexeme.toCharArray();
         int opened = 0;
         for (int i = left+1; i <= right; i++){
-            if (charsLexem[i] == ')' && opened == 0)
-                return true;
+            if (charsLexem[i] == ')' && opened == 0){
+                if(i==right)
+                    return true;
+                else
+                    return false;
+            }
             else if(charsLexem[i] == '(')
                 opened++;
             else if(charsLexem[i] == ')' && opened != 0)
                 opened--;
         }
-        return false;
+        return true;
     }
 
     private int countOfBrackets(String lexeme ){

@@ -1,5 +1,6 @@
 package GUI;
 
+import Tree.TreeElement;
 import Validation.Validator;
 
 import java.awt.*;
@@ -36,9 +37,11 @@ public class CalcGUI extends JFrame {
         public void actionPerformed(ActionEvent event) {
             Validator validator = new Validator(tfInput.getText());
             String message = validator.valudate();
-            if (message.equals(""))
-                JOptionPane.showMessageDialog(null, "OK!","Output", JOptionPane.PLAIN_MESSAGE);
-            else{
+            if (message.equals("")) {
+                TreeElement tree = new TreeElement(tfInput.getText());
+                message = tree.getResult();
+                JOptionPane.showMessageDialog(null, message, "Output", JOptionPane.PLAIN_MESSAGE);
+            } else{
                 JOptionPane.showMessageDialog(null, message,"Output", JOptionPane.PLAIN_MESSAGE);
             }
         }

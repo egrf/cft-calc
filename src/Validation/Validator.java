@@ -27,8 +27,7 @@ public class Validator {
     }
 
     private boolean expressionValidator(){
-        //Pattern p = Pattern.compile("^[0-9\\+()./\\*]*[a-zA-Zа-яА-Я@!#$%,^:;&|`'\"<_>{}\\[\\]=]+[0-9\\+()./\\*]*[a-zA-Zа-яА-Я@!#$%,^:;&|`'\"<_>{}\\[\\]=]+");
-        Pattern p = Pattern.compile("^[0-9\\+:?()\\-./\\*]+");
+        Pattern p = Pattern.compile("^[0-9+:?<>()\\-./*]+");
         Matcher m = p.matcher(expression);
         return m.matches();
     }

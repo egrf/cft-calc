@@ -1,9 +1,11 @@
 import GUI.CalcGUI;
 
+import javax.swing.*;
+
 public class Main {
 
+
     public static void main(String[] args) {
-        CalcGUI app = new CalcGUI();
-        app.setVisible(true);
+        SwingUtilities.invokeLater(CalcGUI::new);
     }
 }

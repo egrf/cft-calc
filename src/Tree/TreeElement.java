@@ -2,7 +2,7 @@ package Tree;
 
 import Parser.ExpressionParser;
 
-public class TreeElement implements ITree{
+public class TreeElement{
     private TreeElement parent;
     private TreeElement leftChild;
     private TreeElement rightChild;
@@ -17,6 +17,7 @@ public class TreeElement implements ITree{
     public String getResult(){
 
         buildTree(this);
+        calculate(this);
         return this.getValue().toString();
     }
 
@@ -38,7 +39,7 @@ public class TreeElement implements ITree{
             buildTree(rightChild);
         } else {
             if (treeElement.getLexeme().indexOf('(') == 1) {
-                TreeElement leftChild = new TreeElement("");
+                TreeElement leftChild = new TreeElement("0");
                 TreeElement rightChild = new TreeElement(treeElement.getLexeme().substring(1));
                 treeElement.setLeftChild(leftChild);
                 treeElement.setRightChild(rightChild);
@@ -47,33 +48,59 @@ public class TreeElement implements ITree{
                 treeElement.setSign(treeElement.getLexeme().charAt(0));
                 rightChild.setParent(treeElement);
                 buildTree(rightChild);
+                buildTree(leftChild);
             }
-            treeElement.setValue(Double.parseDouble(treeElement.getLexeme()));
+            else {
+                treeElement.setValue(Double.parseDouble(treeElement.getLexeme()));
+            }
         }
     }
 
-    @Override
-    public void calculate(TreeElement treeElement) {
+    private void calculate(TreeElement treeElement) {
         if(treeElement.getLeftChild() != null && treeElement.getRightChild() != null){
-
-        }
-        else{
+            if(treeElement.getLeftChild().getValue() == null)
+                calculate(treeElement.getLeftChild());
+            if(treeElement.getRightChild().getValue() == null)
+                calculate(treeElement.getRightChild());
+            if(treeElement.getLeftChild().getValue() != null && treeElement.getRightChild().getValue() != null){
+                treeElement.setValue(count(treeElement.getLeftChild(),treeElement.getRightChild(),treeElement.getSign()));
+            }
         }
     }
 
-    public TreeElement getLeftChild() {
+    private Double count(TreeElement leftChild, TreeElement rightChild, char sign) {
+        switch (sign) {
+            case ('+'): {
+                return leftChild.getValue()+rightChild.getValue();
+            }
+            case ('-'): {
+                return leftChild.getValue()-rightChild.getValue();
+            }
+            case ('*'): {
+                return leftChild.getValue()*rightChild.getValue();
+            }
+            case ('/'): {
+                return leftChild.getValue()/rightChild.getValue();
+            }
+            default:{
+                return 0.0;
+            }
+        }
+    }
+
+    private TreeElement getLeftChild() {
         return leftChild;
     }
 
-    public void setLeftChild(TreeElement leftChild) {
+    private void setLeftChild(TreeElement leftChild) {
         this.leftChild = leftChild;
     }
 
-    public TreeElement getRightChild() {
+    private TreeElement getRightChild() {
         return rightChild;
     }
 
-    public void setRightChild(TreeElement rightChild) {
+    private void setRightChild(TreeElement rightChild) {
         this.rightChild = rightChild;
     }
 
@@ -85,11 +112,11 @@ public class TreeElement implements ITree{
         this.lexeme = lexeme;
     }
 
-    public Double getValue() {
+    private Double getValue() {
         return value;
     }
 
-    public void setValue(Double value) {
+    private void setValue(Double value) {
         this.value = value;
     }
 
@@ -97,15 +124,15 @@ public class TreeElement implements ITree{
         return parent;
     }
 
-    public void setParent(TreeElement parent) {
+    private void setParent(TreeElement parent) {
         this.parent = parent;
     }
 
-    public char getSign() {
+    private char getSign() {
         return sign;
     }
 
-    public void setSign(char sign) {
+    private void setSign(char sign) {
         this.sign = sign;
     }
 }

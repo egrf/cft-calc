@@ -95,6 +95,9 @@ public class ExpressionParser {
         int start = 0;
         return findRightBracket(lexeme,start);
     }
+    private int findRightPair(String lexeme, int start) {
+        return findRightBracket(lexeme,start);
+    }
 
     private int findRightBracket(String lexeme, int start) {
         int i;
@@ -111,19 +114,12 @@ public class ExpressionParser {
         return i;
     }
 
-    private int findRightPair(String lexeme, int start) {
-        return findRightBracket(lexeme,start);
-    }
-
     private boolean areTheseBracketsAPair(int left, int right, String lexeme) {
         char[] charsLexem = lexeme.toCharArray();
         int opened = 0;
         for (int i = left+1; i <= right; i++){
             if (charsLexem[i] == ')' && opened == 0){
-                if(i==right)
-                    return true;
-                else
-                    return false;
+                return i == right;
             }
             else if(charsLexem[i] == '(')
                 opened++;
@@ -145,7 +141,7 @@ public class ExpressionParser {
 
     private static final Map<String, Integer> MATH_OPERATIONS;
     static {
-        MATH_OPERATIONS = new HashMap<String, Integer>();
+        MATH_OPERATIONS = new HashMap<>();
         MATH_OPERATIONS.put("^", 1);
         MATH_OPERATIONS.put("*", 2);
         MATH_OPERATIONS.put("/", 2);

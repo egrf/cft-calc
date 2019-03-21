@@ -7,11 +7,8 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-
 public class CalcGUI extends JFrame {
-    private JButton bCalculate = new JButton("Calculate");
     private JTextField tfInput = new JTextField("",8);
-    private JLabel label = new JLabel("Please, input your expression:");
 
     public CalcGUI() {
         super("Simple CFT Calculator");
@@ -22,14 +19,21 @@ public class CalcGUI extends JFrame {
         int y = (int) ((dimension.getHeight() - height) / 2);
         this.setBounds(x,y, width, height);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(false);
         Font font1 = new Font("SansSerif", Font.BOLD, 18);
         tfInput.setFont(font1);
         Container container = this.getContentPane();
-        container.setLayout(new GridLayout(3,2,2,2));
+        container.setLayout(new GridLayout(2,2,2,2));
+        JLabel label = new JLabel("Please, input your expression:");
         container.add(label);
         container.add(tfInput);
+        JButton bCalculate = new JButton("Calculate");
         bCalculate.addActionListener( new ButtonEventListener());
         container.add(bCalculate);
+        JButton bClear = new JButton("Clear");
+        bClear.addActionListener(new ButtonClearListener());
+        container.add(bClear);
+        this.setVisible(true);
     }
 
 
@@ -44,6 +48,12 @@ public class CalcGUI extends JFrame {
             } else{
                 JOptionPane.showMessageDialog(null, message,"Output", JOptionPane.PLAIN_MESSAGE);
             }
+        }
+    }
+
+    private class ButtonClearListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            tfInput.setText("");
         }
     }
 }

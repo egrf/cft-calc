@@ -24,7 +24,7 @@ public class Validator {
     }
 
     private boolean expressionValidator() {
-        Pattern p = Pattern.compile("^[0-9+:?<>()\\s\\-./*]+");
+        Pattern p = Pattern.compile("^[0-9+:?!<>()\\s\\-./*={2}]+");
         Matcher m = p.matcher(expression);
         return m.matches();
     }

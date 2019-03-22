@@ -16,7 +16,6 @@ public class TreeElement {
     }
 
     private void buildTree(TreeElement treeElement) {
-//        this.setLexeme(this.lexeme.replaceAll("--", "+"));
 
         int inflectionPoint = new LexemeParser().inflectionPointSearch(treeElement);
         if (inflectionPoint != 0) {
@@ -52,12 +51,12 @@ public class TreeElement {
             if (treeElement.rightChild.value == null)
                 calculate(treeElement.rightChild);
             if (treeElement.leftChild.value != null && treeElement.rightChild.value != null) {
-                treeElement.value = count(treeElement.leftChild, treeElement.rightChild, treeElement.sign);
+                treeElement.value = getAnswer(treeElement.leftChild, treeElement.rightChild, treeElement.sign);
             }
         }
     }
 
-    private Double count(TreeElement leftChild, TreeElement rightChild, char sign) {
+    private Double getAnswer(TreeElement leftChild, TreeElement rightChild, char sign) {
         switch (sign) {
             case ('+'): {
                 return leftChild.value + rightChild.value;

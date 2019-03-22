@@ -25,7 +25,7 @@ public class ExpressionParser {
     }
 
     private String splitIntoFourTrees() {
-        String result="";
+        String result = "";
         String[] parts = expression.split("[<>!=]+");
         String firstPart = parts[0];
         parts = parts[1].split("[?]");
@@ -34,32 +34,29 @@ public class ExpressionParser {
         String thirdPart = parts[0];
         String fourthPart = parts[1];
 
-        if (expression.contains(">")){
+        if (expression.contains(">")) {
             if (new TreeElement(firstPart).getValue() > new TreeElement(secondPart).getValue()) {
                 result = Double.toString(new TreeElement(thirdPart).getValue());
 
             } else {
                 result = Double.toString(new TreeElement(fourthPart).getValue());
             }
-        }
-        else if (expression.contains("<")){
+        } else if (expression.contains("<")) {
             if (new TreeElement(firstPart).getValue() < new TreeElement(secondPart).getValue()) {
                 result = Double.toString(new TreeElement(thirdPart).getValue());
 
             } else {
                 result = Double.toString(new TreeElement(fourthPart).getValue());
             }
-        }
-        else if(expression.contains("==")){
-            if(new TreeElement(firstPart).getValue().equals(new TreeElement(secondPart).getValue())) {
+        } else if (expression.contains("==")) {
+            if (new TreeElement(firstPart).getValue().equals(new TreeElement(secondPart).getValue())) {
                 result = Double.toString(new TreeElement(thirdPart).getValue());
 
             } else {
                 result = Double.toString(new TreeElement(fourthPart).getValue());
             }
-        }
-        else if(expression.contains("!=")){
-            if(!new TreeElement(firstPart).getValue().equals(new TreeElement(secondPart).getValue())) {
+        } else if (expression.contains("!=")) {
+            if (!new TreeElement(firstPart).getValue().equals(new TreeElement(secondPart).getValue())) {
                 result = Double.toString(new TreeElement(thirdPart).getValue());
 
             } else {

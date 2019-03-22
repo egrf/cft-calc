@@ -7,11 +7,10 @@ public class LexemeParser {
     private static final Map<Character, Integer> MATH_OPERATIONS = new HashMap<>();
 
     static {
-        MATH_OPERATIONS.put('^', 1);
-        MATH_OPERATIONS.put('*', 2);
-        MATH_OPERATIONS.put('/', 2);
-        MATH_OPERATIONS.put('+', 3);
-        MATH_OPERATIONS.put('-', 3);
+        MATH_OPERATIONS.put('*', 1);
+        MATH_OPERATIONS.put('/', 1);
+        MATH_OPERATIONS.put('+', 2);
+        MATH_OPERATIONS.put('-', 2);
     }
 
     public int inflectionPointSearch(Tree.TreeElement treeElement) {
